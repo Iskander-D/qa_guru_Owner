@@ -41,7 +41,7 @@ bin/
 ### Mac OS ###
 .DS_Store
 classpath
-
+.idea
 .settings/org.eclipse.buildship.core.prefs
 .vscode
 /gradlew
