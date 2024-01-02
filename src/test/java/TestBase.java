@@ -15,14 +15,13 @@ public class TestBase {
         Configuration.browser = webDriverConfig.getBrowser();
         Configuration.browserVersion = webDriverConfig.getBrowserVersion();
         Configuration.browserSize = webDriverConfig.getBrowserSize();
-        if (!webDriverConfig.getRemoteWebDriver().equals("")) {
+        if (!"".equals(webDriverConfig.getRemoteWebDriver())) {
             Configuration.remote = webDriverConfig.getRemoteWebDriver();
         }
         String baseUrlOfPage = System.getProperty("base.url");
         if (Objects.isNull(baseUrlOfPage)) {
-            baseUrlOfPage= "https://www.google.com/";
+            baseUrlOfPage= "https://www.obsessedgarage.com/";
         }
         open(baseUrlOfPage);
     }
 }
-

@@ -59,9 +59,4 @@ allure {
         }
     }
 
-    task configuration_tests(type: Test) {
-        useJUnitPlatform {
-            includeTags "configuration_tests"
-        }
-    }
 }
