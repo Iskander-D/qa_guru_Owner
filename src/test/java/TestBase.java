@@ -1,27 +1,34 @@
-import com.codeborne.selenide.Configuration;
-import config.WebDriverConfig;
-import org.aeonbits.owner.ConfigFactory;
+import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.logevents.SelenideLogger;
+import config.ConfigReader;
+import config.ProjectConfiguration;
+import config.web.WebConfig;
+import helpers.Attach;
+import io.qameta.allure.selenide.AllureSelenide;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 
-import java.util.Objects;
-
-import static com.codeborne.selenide.Selenide.open;
 
 public class TestBase {
-    @BeforeAll
-    public static void setUp() {
-        WebDriverConfig webDriverConfig = ConfigFactory.create(WebDriverConfig.class, System.getProperties());
+    MainPage mainPage = new MainPage();
+    private static final WebConfig webConfig = ConfigReader.Instance.read();
 
-        Configuration.browser = webDriverConfig.getBrowser();
-        Configuration.browserVersion = webDriverConfig.getBrowserVersion();
-        Configuration.browserSize = webDriverConfig.getBrowserSize();
-        if (!"".equals(webDriverConfig.getRemoteWebDriver())) {
-            Configuration.remote = webDriverConfig.getRemoteWebDriver();
-        }
-        String baseUrlOfPage = System.getProperty("base.url");
-        if (Objects.isNull(baseUrlOfPage)) {
-            baseUrlOfPage= "https://www.obsessedgarage.com/";
-        }
-        open(baseUrlOfPage);
+    @BeforeAll
+    static void beforeAll() {
+        SelenideLogger.addListener("allure", new AllureSelenide());
+        ProjectConfiguration projectConfiguration = new ProjectConfiguration(webConfig);
+        projectConfiguration.webConfig();
     }
+
+    @AfterEach
+    void afterTests() {
+        Attach.screenshotAs("Last screenshot");
+        Attach.pageSource();
+        Attach.browserConsoleLogs();
+        Attach.addVideo();
+        Selenide.clearBrowserCookies();
+        Selenide.clearBrowserLocalStorage();
+        Selenide.closeWebDriver();
+    }
+
 }
