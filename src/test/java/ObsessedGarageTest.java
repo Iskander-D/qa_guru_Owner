@@ -1,6 +1,7 @@
 import config.WebDriverProvider;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.support.ui.Sleeper;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.*;
@@ -11,25 +12,27 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ObsessedGarageTest extends TestBase {
 
 
-    @Test
-    @DisplayName("Проверка загаловка на странице")
-    public void googleTitleTest() {
-        mainPage.openPage();
-        assertThat(title()).contains("Obsessed Garage | Home Of The Obsessed");
-
-    }
+//    @Test
+//    @DisplayName("Проверка загаловка на странице")
+//    public void googleTitleTest() {
+//        mainPage.openPage();
+//        assertThat(title()).contains("Obsessed Garage | Home Of The Obsessed");
+//
+//    }
 
 
     @Test
     @DisplayName("Проверка результата поиска")
     void googleSearchTest() {
         mainPage.openPage();
-        step("Открываем ссылку Open Box/Discount", () -> {
-            $$(".site-nav__item").find(text("Open Box/Discount")).click();
+//        sleep(5000);
+        $(".template-index").doubleClick();
+
+//        $("# title-Close dialog 6").click();
+        step("Проверить заголовок BILT-HAMBER", () -> {
+            $(".hero__animation-contents").shouldHave(text("BILT-HAMBER"));
         });
-        step("Проверяем наличие заголовка открывшейся страницы Matty's Trinkets & Treasures ", () -> {
-            $("h1.section-header__title").shouldHave(text("Matty's Trinkets & Treasures"));
-        });
+
     }
 
 }

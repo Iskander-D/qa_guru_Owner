@@ -20,6 +20,7 @@ public class ProjectConfiguration {
         Configuration.browserVersion = webConfig.browserVersion();
         Configuration.browserSize = webConfig.browserSize();
         Configuration.pageLoadStrategy ="eager";
+//        Configuration.holdBrowserOpen = true; // todo стереть !!!!!
         if (webConfig.isRemote()) {
             Configuration.remote = String.valueOf(webConfig.remoteUrl());
             DesiredCapabilities capabilities = new DesiredCapabilities();
@@ -29,6 +30,9 @@ public class ProjectConfiguration {
                     "env", Arrays.asList("LANG=ru_RU.UTF-8", "LANGUAGE=ru:ru", "LC_ALL=ru_RU.UTF=8")
             ));
             Configuration.browserCapabilities = capabilities;
+            System.out.println("Удаленный запуск с Selenoid: ");
+        } else {
+            System.out.println("Локальный запуск");
         }
     }
 }
